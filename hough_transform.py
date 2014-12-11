@@ -45,8 +45,10 @@ def show_hough_line(imgpath):
   accumulator, thetas, rhos = hough_line(img)
 
   plt.subplot(1, 2, 1)
+  plt.title('Input image')
   plt.imshow(img, 'gray')
   plt.subplot(1, 2, 2)
+  plt.title('Hough transform')
   plt.imshow(accumulator, cmap='jet')
   plt.axis('off')
   plt.savefig('imgs/output.png', bbox_inches='tight')

@@ -2,10 +2,12 @@
 
 Python implementation of hough transform for detecting lines in images.
 
-##Usage
+## Usage
 ```py
 python hough_transform.py
 ```
+## Sample 
+![hough transform image](imgs/output.png)
 
 ## Resources
 * OpenCV's hough transform documentation: 
