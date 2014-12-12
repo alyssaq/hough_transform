@@ -15,7 +15,7 @@ def hough_line(img):
          distance of the input image.
   """
   # theta = -90 to 89, rho = -diag_len to diag_len
-  thetas = np.linspace(-np.pi/2, np.pi/2, 180)
+  thetas = np.linspace(-np.pi/2, np.pi/2, 90)
   num_thetas = len(thetas)
   cos_t = np.cos(thetas)
   sin_t = np.sin(thetas)
@@ -32,17 +32,15 @@ def hough_line(img):
     x = x_idxs[i]
     y = y_idxs[i]
 
-    for theta in range(num_thetas):
-      rho = round(x * cos_t[theta] + y * sin_t[theta]) + diag_len
-      accumulator[rho, theta] += 1
+    for t_idx in range(num_thetas):
+      rho = round(x * cos_t[t_idx] + y * sin_t[t_idx]) + diag_len
+      print x, y, rho, thetas[t_idx] * 180/np.pi
+      accumulator[rho, t_idx] += 1
 
   return accumulator, thetas, rhos
 
-def show_hough_line(imgpath):
+def show_hough_line(img, accumulator):
   import matplotlib.pyplot as plt
-
-  img = misc.imread(imgpath)
-  accumulator, thetas, rhos = hough_line(img)
 
   plt.subplot(1, 2, 1)
   plt.title('Input image')
@@ -55,4 +53,7 @@ def show_hough_line(imgpath):
   plt.show()
 
 if __name__ == '__main__':
-  show_hough_line('imgs/binary_crosses.png')
+  imgpath = 'imgs/binary_crosses.png'
+  img = misc.imread(imgpath)
+  accumulator, thetas, rhos = hough_line(img)
+  show_hough_line(img, accumulator)
