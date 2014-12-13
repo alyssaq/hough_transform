@@ -1,12 +1,14 @@
 import numpy as np
 from scipy import misc
 
-def hough_line(img):
+def hough_line(img, angle_step=1):
   """
   Hough transform for lines
 
   Input:
   img - 2D binary image with nonzeros representing edges
+  angle_step - Spacing between angles to use every n-th angle
+    between -90 and 90 degrees. Default step is 1.
 
   Returns:
   accumulator - 2D array of the hough transform accumulator
@@ -15,7 +17,7 @@ def hough_line(img):
          distance of the input image.
   """
   # theta = -90 to 89, rho = -diag_len to diag_len
-  thetas = np.linspace(-np.pi/2, np.pi/2, 90)
+  thetas = np.deg2rad(np.arange(-90.0, 90.0, angle_step))
   num_thetas = len(thetas)
   cos_t = np.cos(thetas)
   sin_t = np.sin(thetas)
