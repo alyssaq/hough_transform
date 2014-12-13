@@ -1,2 +1,5 @@
 *.pyc
 *.swp
+*.ipynb
+*.ipynb_checkpoints
+*.lprof

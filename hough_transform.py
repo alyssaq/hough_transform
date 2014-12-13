@@ -34,7 +34,7 @@ def hough_line(img):
 
     for t_idx in range(num_thetas):
       rho = round(x * cos_t[t_idx] + y * sin_t[t_idx]) + diag_len
-      print x, y, rho, thetas[t_idx] * 180/np.pi
+      #print x, y, rho, thetas[t_idx] * 180/np.pi
       accumulator[rho, t_idx] += 1
 
   return accumulator, thetas, rhos
@@ -42,13 +42,22 @@ def hough_line(img):
 def show_hough_line(img, accumulator):
   import matplotlib.pyplot as plt
 
-  plt.subplot(1, 2, 1)
-  plt.title('Input image')
-  plt.imshow(img, 'gray')
-  plt.subplot(1, 2, 2)
-  plt.title('Hough transform')
-  plt.imshow(accumulator, cmap='jet')
-  plt.axis('off')
+  fig, ax = plt.subplots(1, 2, figsize=(10, 10))
+
+  ax[0].imshow(img, cmap=plt.cm.gray)
+  ax[0].set_title('Input image')
+  ax[0].axis('image')
+
+  ax[1].imshow(
+    accumulator, cmap='jet',
+    extent=[np.rad2deg(thetas[-1]), np.rad2deg(thetas[0]), rhos[-1], rhos[0]])
+  ax[1].set_aspect('equal', adjustable='box')
+  ax[1].set_title('Hough transform')
+  ax[1].set_xlabel('Angles (degrees)')
+  ax[1].set_ylabel('Distance (pixels)')
+  ax[1].axis('image')
+
+  #plt.axis('off')
   plt.savefig('imgs/output.png', bbox_inches='tight')
   plt.show()
 
