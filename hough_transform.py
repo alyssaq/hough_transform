@@ -28,7 +28,7 @@ def hough_line(img, angle_step=1):
 
   # accumulator array of theta vs rho
   accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint64)
-  x_idxs, y_idxs = np.nonzero(img)
+  y_idxs, x_idxs = np.nonzero(img)
 
   for i in range(len(x_idxs)):
     x = x_idxs[i]
@@ -36,7 +36,6 @@ def hough_line(img, angle_step=1):
 
     for t_idx in range(num_thetas):
       rho = round(x * cos_t[t_idx] + y * sin_t[t_idx]) + diag_len
-      #print x, y, rho, thetas[t_idx] * 180/np.pi
       accumulator[rho, t_idx] += 1
 
   return accumulator, thetas, rhos
