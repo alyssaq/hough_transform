@@ -1,6 +1,7 @@
 # Hough Transform - Line Detection
 
-Python implementation of hough transform for detecting lines in images.
+Python implementation of hough transform for detecting lines in images.    
+Explanation of how the hough transform works in my blog post: [Understanding Hough Transform](http://scriptogr.am/alyssa/post/understanding-hough-transform)
 
 ## Usage
 ```py
