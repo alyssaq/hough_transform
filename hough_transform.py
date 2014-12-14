@@ -24,7 +24,7 @@ def hough_line(img, angle_step=1):
 
   width, height = img.shape
   diag_len = np.ceil(np.sqrt(width * width + height * height))
-  rhos = np.arange(-diag_len, diag_len)
+  rhos = np.linspace(-diag_len, diag_len, diag_len * 2.0)
 
   # accumulator array of theta vs rho
   accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint64)
