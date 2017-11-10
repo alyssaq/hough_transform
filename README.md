@@ -3,6 +3,10 @@
 Python implementation of hough transform for detecting lines in images.    
 Explanation of how the hough transform works in my blog post: [Understanding Hough Transform](https://alyssaq.github.io/2014/understanding-hough-transform)
 
+## Requirements
+* Tested on Python 2.7 and Python 3.6
+* `pip install -r requirements.txt`
+
 ## Usage
 ```py
 python hough_transform.py
