@@ -2,8 +2,11 @@ import numpy as np
 import imageio
 import math
 
+def rgb2gray(rgb):
+    return np.dot(rgb[..., :3], [0.299, 0.587, 0.114]).astype(np.uint8)
 
-def hough_line(img, angle_step=1, value_threshold=5):
+
+def hough_line(img, angle_step=1, lines_are_white=True, value_threshold=5):
     """
     Hough transform for lines
 
@@ -11,7 +14,8 @@ def hough_line(img, angle_step=1, value_threshold=5):
     img - 2D binary image with nonzeros representing edges
     angle_step - Spacing between angles to use every n-th angle
                  between -90 and 90 degrees. Default step is 1.
-    value_threshold - Pixel values above the value_threshold are edges
+    lines_are_white - boolean indicating whether lines to be detected are white
+    value_threshold - Pixel values above or below the value_threshold are edges
 
     Returns:
     accumulator - 2D array of the hough transform accumulator
@@ -33,7 +37,8 @@ def hough_line(img, angle_step=1, value_threshold=5):
     # Hough accumulator array of theta vs rho
     accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint8)
     # (row, col) indexes to edges
-    y_idxs, x_idxs = np.nonzero(img > value_threshold)
+    are_edges = img > value_threshold if lines_are_white else img < value_threshold
+    y_idxs, x_idxs = np.nonzero(are_edges)
 
     # Vote in the hough accumulator
     for i in range(len(x_idxs)):
@@ -48,7 +53,7 @@ def hough_line(img, angle_step=1, value_threshold=5):
     return accumulator, thetas, rhos
 
 
-def show_hough_line(img, accumulator):
+def show_hough_line(img, accumulator, save_path=None):
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(1, 2, figsize=(10, 10))
@@ -67,12 +72,15 @@ def show_hough_line(img, accumulator):
     ax[1].axis('image')
 
     # plt.axis('off')
-    plt.savefig('imgs/output.png', bbox_inches='tight')
+    if save_path is not None:
+        plt.savefig(save_path, bbox_inches='tight')
     plt.show()
 
 
 if __name__ == '__main__':
     imgpath = 'imgs/binary_crosses.png'
     img = imageio.imread(imgpath)
+    if img.ndim == 3:
+        img = rgb2gray(img)
     accumulator, thetas, rhos = hough_line(img)
-    show_hough_line(img, accumulator)
+    show_hough_line(img, accumulator, save_path='imgs/output.png')
