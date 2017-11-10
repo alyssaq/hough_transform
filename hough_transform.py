@@ -1,14 +1,16 @@
 import numpy as np
-from scipy import misc
+import imageio
+import math
 
-def hough_line(img, angle_step=1):
+def hough_line(img, angle_step=1, value_threshold=5):
   """
   Hough transform for lines
 
   Input:
   img - 2D binary image with nonzeros representing edges
   angle_step - Spacing between angles to use every n-th angle
-    between -90 and 90 degrees. Default step is 1.
+               between -90 and 90 degrees. Default step is 1.
+  value_threshold - Pixel values above the value_threshold are edges
 
   Returns:
   accumulator - 2D array of the hough transform accumulator
@@ -19,7 +21,7 @@ def hough_line(img, angle_step=1):
   # Rho and Theta ranges
   thetas = np.deg2rad(np.arange(-90.0, 90.0, angle_step))
   width, height = img.shape
-  diag_len = np.ceil(np.sqrt(width * width + height * height))
+  diag_len = int(round(math.sqrt(width * width + height * height)))
   rhos = np.linspace(-diag_len, diag_len, diag_len * 2.0)
 
   # Cache some resuable values
@@ -28,8 +30,8 @@ def hough_line(img, angle_step=1):
   num_thetas = len(thetas)
 
   # Hough accumulator array of theta vs rho
-  accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint64)
-  y_idxs, x_idxs = np.nonzero(img)  # (row, col) indexes to edges
+  accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint8)
+  y_idxs, x_idxs = np.nonzero(img > value_threshold)  # (row, col) indexes to edges
 
   # Vote in the hough accumulator
   for i in range(len(x_idxs)):
@@ -38,10 +40,11 @@ def hough_line(img, angle_step=1):
 
     for t_idx in range(num_thetas):
       # Calculate rho. diag_len is added for a positive index
-      rho = round(x * cos_t[t_idx] + y * sin_t[t_idx]) + diag_len
+      rho = diag_len + int(round(x * cos_t[t_idx] + y * sin_t[t_idx]))
       accumulator[rho, t_idx] += 1
 
   return accumulator, thetas, rhos
+
 
 def show_hough_line(img, accumulator):
   import matplotlib.pyplot as plt
@@ -61,12 +64,13 @@ def show_hough_line(img, accumulator):
   ax[1].set_ylabel('Distance (pixels)')
   ax[1].axis('image')
 
-  #plt.axis('off')
+  # plt.axis('off')
   plt.savefig('imgs/output.png', bbox_inches='tight')
   plt.show()
 
+
 if __name__ == '__main__':
   imgpath = 'imgs/binary_crosses.png'
-  img = misc.imread(imgpath)
+  img = imageio.imread(imgpath)
   accumulator, thetas, rhos = hough_line(img)
   show_hough_line(img, accumulator)
