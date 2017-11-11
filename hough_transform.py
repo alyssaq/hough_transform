@@ -27,7 +27,7 @@ def hough_line(img, angle_step=1, lines_are_white=True, value_threshold=5):
     thetas = np.deg2rad(np.arange(-90.0, 90.0, angle_step))
     width, height = img.shape
     diag_len = int(round(math.sqrt(width * width + height * height)))
-    rhos = np.linspace(-diag_len, diag_len, diag_len * 2.0)
+    rhos = np.linspace(-diag_len, diag_len, diag_len * 2)
 
     # Cache some resuable values
     cos_t = np.cos(thetas)
@@ -53,7 +53,7 @@ def hough_line(img, angle_step=1, lines_are_white=True, value_threshold=5):
     return accumulator, thetas, rhos
 
 
-def show_hough_line(img, accumulator, save_path=None):
+def show_hough_line(img, accumulator, thetas, rhos, save_path=None):
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(1, 2, figsize=(10, 10))
