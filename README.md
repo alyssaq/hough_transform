@@ -14,6 +14,11 @@ python hough_transform.py
 ## Sample 
 ![hough transform image](imgs/output.png)
 
+## Tests
+```py
+python hough_transform_test.py
+```
+
 ## Resources
 * OpenCV's hough transform documentation: 
 <http://docs.opencv.org/doc/tutorials/imgproc/imgtrans/hough_lines/hough_lines.html>
