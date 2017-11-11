@@ -1,4 +1,5 @@
 # Hough Transform - Line Detection
+[![Build Status](https://travis-ci.org/alyssaq/hough_transform.svg?branch=master)](https://travis-ci.org/alyssaq/hough_transform)
 
 Python implementation of hough transform for detecting lines in images.    
 Explanation of how the hough transform works in my blog post: [Understanding Hough Transform](https://alyssaq.github.io/2014/understanding-hough-transform)
