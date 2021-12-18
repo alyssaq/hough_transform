@@ -83,4 +83,4 @@ if __name__ == '__main__':
     if img.ndim == 3:
         img = rgb2gray(img)
     accumulator, thetas, rhos = hough_line(img)
-    show_hough_line(img, accumulator, save_path='imgs/output.png')
+    show_hough_line(img, accumulator, thetas, rhos, save_path='imgs/output.png')
