@@ -35,7 +35,7 @@ def hough_line(img, angle_step=1, lines_are_white=True, value_threshold=5):
     num_thetas = len(thetas)
 
     # Hough accumulator array of theta vs rho
-    accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint8)
+    accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint64)
     # (row, col) indexes to edges
     are_edges = img > value_threshold if lines_are_white else img < value_threshold
     y_idxs, x_idxs = np.nonzero(are_edges)
@@ -68,7 +68,7 @@ def fast_hough_line(img, angle_step=1, lines_are_white=True, value_threshold=5):
     num_thetas = len(thetas)
 
     # Hough accumulator array of theta vs rho
-    accumulator = np.zeros((2 * diag_len, num_thetas))
+    accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint64)
     are_edges = img > value_threshold if lines_are_white else img < value_threshold
     #are_edges = cv2.Canny(img,50,150,apertureSize = 3)
     y_idxs, x_idxs = np.nonzero(are_edges)  # (row, col) indexes to edges
