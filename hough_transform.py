@@ -78,8 +78,8 @@ def fast_hough_line(img, angle_step=1, lines_are_white=True, value_threshold=5):
     rhosmat = np.round(xcosthetas + ysinthetas) + diag_len
     rhosmat = rhosmat.astype(np.int16)
     for i in xrange(num_thetas):
-        rhos,counts = np.unique(rhosmat[:,i], return_counts=True)
-        accumulator[rhos,i] = counts
+        rhos_index,counts = np.unique(rhosmat[:,i], return_counts=True)
+        accumulator[rhos_index,i] = counts
     return accumulator, thetas, rhos
 
 def show_hough_line(img, accumulator, thetas, rhos, save_path=None):
