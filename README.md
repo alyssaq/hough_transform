@@ -25,3 +25,6 @@ python hough_transform_test.py
 <http://docs.opencv.org/doc/tutorials/imgproc/imgtrans/hough_lines/hough_lines.html>
 * EGGN 512 hough transform lecture in 3 parts:
 <https://www.youtube.com/watch?v=uDB2qGqnQ1g>
+
+## License
+[MIT](https://alyssaq.github.io/mit-license)
